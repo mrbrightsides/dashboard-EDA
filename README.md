@@ -14,9 +14,9 @@ Dataset sintetis ini dibuat untuk mensimulasikan insight pemesanan hotel, durasi
 - `Dataset_Pemesanan_Hotel_10000Baris.csv`: Dataset sintetis
 - `requirements.txt`: Dependensi untuk deploy
 
+🔗 Demo: [Lihat Dashboard](https://dashboard-eda.streamlit.app)
+
 ## ▶️ Jalankan Lokal
 ```bash
 pip install streamlit plotly pandas
 streamlit run app.py
-
-🔗 Demo: [Lihat Dashboard](https://dashboard-eda.streamlit.app)
