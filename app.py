@@ -6,17 +6,73 @@ import plotly.express as px
 import streamlit as st
 from datetime import datetime
 
+st.markdown("""
+    <style>
+    /* === DARK MODE SIDEBAR === */
+    section[data-testid="stSidebar"] {
+        background-color: #111111;
+        padding: 1.5rem;
+        color: white;
+        border-right: 1px solid #333;
+    }
+
+    /* === Box/frame styling like STC Analytics === */
+    section[data-testid="stSidebar"] > div {
+        background-color: #1a1a1a;
+        padding: 16px;
+        border-radius: 8px;
+        border: 1px solid #333333;
+        box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    }
+
+    /* === Sidebar text and links === */
+    section[data-testid="stSidebar"] * {
+        color: white !important;
+    }
+
+    section[data-testid="stSidebar"] a {
+        color: #1abfff !important;
+        text-decoration: none;
+    }
+
+    section[data-testid="stSidebar"] a:hover {
+        text-decoration: underline;
+    }
+    </style>
+""", unsafe_allow_html=True)
+
 # === Logo dan Header ===
 LOGO_URL = "https://i.imgur.com/7j5aq4l.png"
 col1, col2 = st.columns([1, 4])
 with col1:
     st.image(LOGO_URL, width=60)
 with col2:
-    st.markdown("## STC EDA")
+    st.markdown("## STC Insight")
+
+### ℹ️ About STC Insight
+
+**STC Insight** is a lightweight dashboard for cost-related data visualization in the **SmartWisataChain (STC)** ecosystem.
+
+🔍 This tool helps researchers and developers explore financial datasets using:
+
+- Interactive charts
+- CSV & NDJSON support
+- Configurable delimiter & decimal
+- Auto-generated heatmaps
+
+🧠 Originally developed to support the **Cost (Vision)** module in STC Analytics, it is now a standalone exploratory dashboard ready for experimentation and integration, which you can access it in here [**STC Analytics**](https://stc-analytics.streamlit.app).
+
+---
+
+#### 🙌 Dukungan & kontributor
+- ⭐ **Star / Fork**: [GitHub repo](https://github.com/mrbrightsides/dashboard-EDA/tree/main)
+- Built with 💙 by [ELPEEF](https://elpeef.com)
+
+Versi UI: v1.0 • Streamlit • Theme Dark
 
 # ---------- Konfigurasi halaman ----------
 st.set_page_config(page_title="Dashboard EDA Pemesanan", layout="wide")
-st.title("📊 Dashboard Pemesanan Hotel Interaktif")
+st.title("📊 Dashboard Exploratory Data Analysis")
 
 # ---------- Standar kolom dataset ----------
 EXPECTED = [
