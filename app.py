@@ -4,48 +4,49 @@ import plotly.express as px
 import streamlit as st
 from datetime import datetime
 
+# === CUSTOM STYLING: DARK SIDEBAR ala STC Analytics ===
 st.markdown("""
-    <style>
-    /* === DARK MODE SIDEBAR === */
-    section[data-testid="stSidebar"] {
-        background-color: #111111;
-        padding: 1.5rem;
-        color: white;
-        border-right: 1px solid #333;
-    }
-
-    /* === Box/frame styling like STC Analytics === */
-    section[data-testid="stSidebar"] > div {
-        background-color: #1a1a1a;
-        padding: 16px;
-        border-radius: 8px;
-        border: 1px solid #333333;
-        box-shadow: 0 0 10px rgba(0,0,0,0.3);
-    }
-
-    /* === Sidebar text and links === */
-    section[data-testid="stSidebar"] * {
-        color: white !important;
-    }
-
-    section[data-testid="stSidebar"] a {
-        color: #1abfff !important;
-        text-decoration: none;
-    }
-
-    section[data-testid="stSidebar"] a:hover {
-        text-decoration: underline;
-    }
-    </style>
+<style>
+/* Sidebar dark mode */
+section[data-testid="stSidebar"] {
+    background-color: #111111;
+    padding: 1.5rem;
+    color: white;
+    border-right: 1px solid #333;
+}
+section[data-testid="stSidebar"] > div {
+    background-color: #1a1a1a;
+    padding: 16px;
+    border-radius: 8px;
+    border: 1px solid #333333;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
+/* Sidebar text & link style */
+section[data-testid="stSidebar"] * {
+    color: white !important;
+}
+section[data-testid="stSidebar"] a {
+    color: #1abfff !important;
+    text-decoration: none;
+}
+section[data-testid="stSidebar"] a:hover {
+    text-decoration: underline;
+}
+</style>
 """, unsafe_allow_html=True)
 
-# === Logo dan Header ===
+# === LOGO + JUDUL UTAMA ===
 LOGO_URL = "https://i.imgur.com/7j5aq4l.png"
-col1, col2 = st.columns([1, 4])
+col1, col2 = st.columns([1, 5])
 with col1:
     st.image(LOGO_URL, width=60)
 with col2:
-    st.markdown("## STC Insight")
+    st.markdown("## 💡 STC Insight — Cost Analytics Dashboard")
+    st.markdown("""
+    <span style='font-size:16px; color:gray'>
+    Dashboard interaktif untuk menganalisis data pemesanan dan biaya dalam ekosistem <b>SmartWisataChain (STC)</b>.
+    </span>
+    """, unsafe_allow_html=True)
 
 # ---------- Konfigurasi halaman ----------
 st.set_page_config(page_title="STC Insight", layout="wide")
