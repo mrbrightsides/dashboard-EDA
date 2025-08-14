@@ -6,6 +6,14 @@ import plotly.express as px
 import streamlit as st
 from datetime import datetime
 
+# === Logo dan Header ===
+LOGO_URL = "https://i.imgur.com/7j5aq4l.png"
+col1, col2 = st.columns([1, 4])
+with col1:
+    st.image(LOGO_URL, width=60)
+with col2:
+    st.markdown("## STC EDA")
+
 # ---------- Konfigurasi halaman ----------
 st.set_page_config(page_title="Dashboard EDA Pemesanan", layout="wide")
 st.title("📊 Dashboard Pemesanan Hotel Interaktif")
