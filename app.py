@@ -21,8 +21,16 @@ st.markdown("""
 
 Dashboard ini dirancang untuk membantu pelaku industri, peneliti, dan pengembang dalam mengeksplorasi data transaksi wisata secara cepat dan intuitif — mulai dari tren durasi inap, total biaya, hingga metode pembayaran dan status transaksi.
 
-Versi: 1.0.0  
-Dikembangkan oleh: <b>elpeef.dev</b>
+- Interactive charts
+- CSV & NDJSON support
+- Configurable delimiter & decimal
+- Auto-generated heatmaps
+
+#### 🙌 Dukungan & kontributor
+- ⭐ **Star / Fork**: [GitHub repo](https://github.com/mrbrightsides/stc-gasvision/tree/main)
+- Built with 💙 by [ELPEEF](https://elpeef.com)
+
+Versi UI: v1.0 • Streamlit • Theme Dark
 </span>
 """, unsafe_allow_html=True)
 
