@@ -15,6 +15,16 @@ with col2:
 # ---------- Konfigurasi halaman ----------
 st.set_page_config(page_title="STC Insight", layout="wide")
 st.title("📊 Exploratory Data Analysis Dashboard")
+st.markdown("""
+<span style='font-size:16px; color:gray'>
+💡 <b>STC Insight</b> adalah dasbor visual interaktif untuk menganalisis data pemesanan dan biaya dalam ekosistem <b>SmartWisataChain (STC)</b>.
+
+Dashboard ini dirancang untuk membantu pelaku industri, peneliti, dan pengembang dalam mengeksplorasi data transaksi wisata secara cepat dan intuitif — mulai dari tren durasi inap, total biaya, hingga metode pembayaran dan status transaksi.
+
+Versi: 1.0.0  
+Dikembangkan oleh: <b>elpeef.dev</b>
+</span>
+""", unsafe_allow_html=True)
 
 # ---------- Standar kolom dataset ----------
 EXPECTED = [
