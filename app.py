@@ -10,7 +10,7 @@ col1, col2 = st.columns([1, 4])
 with col1:
     st.image(LOGO_URL, width=60)
 with col2:
-    st.markdown("## STC Isight")
+    st.markdown("## STC Insight")
 
 st.set_page_config(
     page_title="STC Insight",
