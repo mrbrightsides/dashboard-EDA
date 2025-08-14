@@ -22,7 +22,7 @@ st.set_page_config(
 st.title("📊 Exploratory Data Analysis Dashboard")
 st.markdown("""
 <span style='font-size:16px; color:gray'>
-💡 <b>STC Insight</b> adalah dasbor visual interaktif untuk menganalisis data pemesanan dan biaya dalam ekosistem [SmartTisataChain (STC)](https://https://smartourism.elpeef.com)
+💡 <b>STC Insight</b> adalah dasbor visual interaktif untuk menganalisis data pemesanan dan biaya dalam ekosistem [GitHub repo](https://github.com/mrbrightsides/stc-gasvision/tree/main)
 
 Dashboard ini dirancang untuk membantu pelaku industri, peneliti, dan pengembang dalam mengeksplorasi data transaksi wisata secara cepat dan intuitif — mulai dari tren durasi inap, total biaya, hingga metode pembayaran dan status transaksi.
 
