@@ -5,6 +5,81 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import plotly.graph_objects as go
 
+# ==== EDA: Upload dataset + download template ====
+import io, pandas as pd, streamlit as st
+from datetime import datetime
+
+EXPECTED = [
+    "ID_pemesanan","nama_pengguna","email","nama_hotel","kota",
+    "check_in","check_out","durasi_inap","jumlah_kamar",
+    "harga_per_malam","total_biaya","metode_pembayaran",
+    "wallet_address","status_transaksi","timestamp_pemesanan"
+]
+
+def build_template_df():
+    return pd.DataFrame(columns=EXPECTED)
+
+# --- UI: download template ---
+st.download_button(
+    "⬇️ Download template CSV",
+    data=build_template_df().to_csv(index=False).encode("utf-8"),
+    file_name="template_pemesanan.csv",
+    mime="text/csv",
+    use_container_width=True,
+)
+
+# --- UI: upload file ---
+col = st.columns(3)
+with col[0]:
+    delim = st.selectbox("Delimiter CSV", [",",";","\\t"], index=0)
+with col[1]:
+    dec = st.selectbox("Tanda desimal", [".",","], index=0)
+with col[2]:
+    show_preview = st.checkbox("Preview 5 baris", value=True)
+
+up = st.file_uploader("Upload dataset pemesanan (CSV/XLSX)", type=["csv","xlsx"], accept_multiple_files=False)
+
+@st.cache_data
+def _read_user_file(file, sep, decimal):
+    if file.name.lower().endswith(".csv"):
+        return pd.read_csv(file, sep=sep, decimal=decimal)
+    return pd.read_excel(file)
+
+def _validate_columns(df):
+    missing = [c for c in EXPECTED if c not in df.columns]
+    extra   = [c for c in df.columns if c not in EXPECTED]
+    return missing, extra
+
+if up is not None:
+    try:
+        df = _read_user_file(up, sep=delim, decimal=dec)
+
+        # Validasi header
+        missing, extra = _validate_columns(df)
+        if missing:
+            st.error(f"Kolom hilang: {', '.join(missing)}")
+            st.stop()
+        if extra:
+            st.warning(f"Ada kolom tambahan yang tidak dikenali: {', '.join(extra)}")
+
+        # Cast tipe data agar grafik aman
+        date_cols = ["check_in","check_out","timestamp_pemesanan"]
+        num_cols  = ["durasi_inap","jumlah_kamar","harga_per_malam","total_biaya"]
+        for c in date_cols:
+            df[c] = pd.to_datetime(df[c], errors="coerce")
+        for c in num_cols:
+            df[c] = pd.to_numeric(df[c], errors="coerce")
+
+        # Simpan ke session untuk modul visualisasi lain
+        st.session_state["eda_df"] = df
+
+        st.success(f"Dataset valid ✅  ({df.shape[0]} baris, {df.shape[1]} kolom)")
+        if show_preview:
+            st.dataframe(df.head())
+
+    except Exception as e:
+        st.error(f"Gagal membaca file: {e}")
+
 st.set_page_config(layout="wide")
 st.title("📊 Dashboard Pemesanan Hotel Interaktif")
 
