@@ -12,8 +12,13 @@ with col1:
 with col2:
     st.markdown("## STC Isight")
 
+st.set_page_config(
+    page_title="STC Insight",
+    page_icon="📊",
+    layout="wide"
+)
+
 # ---------- Konfigurasi halaman ----------
-st.set_page_config(page_title="STC Insight", layout="wide")
 st.title("📊 Exploratory Data Analysis Dashboard")
 st.markdown("""
 <span style='font-size:16px; color:gray'>
