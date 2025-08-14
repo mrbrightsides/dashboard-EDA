@@ -49,16 +49,18 @@ with col2:
 
 # ---------- Konfigurasi halaman ----------
 st.set_page_config(page_title="STC Insight", layout="wide")
-st.title("📊 Dashboard Exploratory Data Analysis, ℹ️ About STC Insight **STC Insight** is a lightweight dashboard for cost-related data visualization in the **SmartTourismChain (STC)** ecosystem.
 
-🔍 This tool helps researchers and developers explore financial datasets using:
+st.title("📊 Exploratory Data Analysis Dashboard")
+("""
+<span style='font-size:16px; color:gray'>
+💡 <b>STC Insight</b> adalah dasbor visual interaktif untuk menganalisis data pemesanan dan biaya dalam ekosistem <b>SmartWisataChain (STC)</b>.
+
+Dashboard ini dirancang untuk membantu pelaku industri, peneliti, dan pengembang dalam mengeksplorasi data transaksi wisata secara cepat dan intuitif — mulai dari tren durasi inap, total biaya, hingga metode pembayaran dan status transaksi.
 
 - Interactive charts
 - CSV & NDJSON support
 - Configurable delimiter & decimal
 - Auto-generated heatmaps
-
-🧠 Originally developed to support the **Cost (Vision)** module in STC Analytics, it is now a standalone exploratory dashboard ready for experimentation and integration, which you can access it in here [**STC Analytics**](https://stc-analytics.streamlit.app).
 
 ---
 
@@ -66,7 +68,9 @@ st.title("📊 Dashboard Exploratory Data Analysis, ℹ️ About STC Insight **S
 - ⭐ **Star / Fork**: [GitHub repo](https://github.com/mrbrightsides/dashboard-EDA/tree/main)
 - Built with 💙 by [ELPEEF](https://elpeef.com)
 
-Versi UI: v1.0 • Streamlit • Theme Dark")
+Versi UI: v1.0 • Streamlit • Theme Dark
+</span>
+""", unsafe_allow_html=True)
 
 # ---------- Standar kolom dataset ----------
 EXPECTED = [
