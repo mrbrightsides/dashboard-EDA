@@ -1,12 +1,7 @@
-import streamlit as st
+import os, io
 import pandas as pd
 import plotly.express as px
-import seaborn as sns
-import matplotlib.pyplot as plt
-import plotly.graph_objects as go
-
-# ==== EDA: Upload dataset + download template ====
-import io, pandas as pd, streamlit as st
+import streamlit as st
 from datetime import datetime
 
 # === Logo dan Header ===
@@ -15,8 +10,13 @@ col1, col2 = st.columns([1, 4])
 with col1:
     st.image(LOGO_URL, width=60)
 with col2:
-    st.markdown("## STC Insight")
+    st.markdown("## STC Isight")
 
+# ---------- Konfigurasi halaman ----------
+st.set_page_config(page_title="STC Insight", layout="wide")
+st.title("📊 Exploratory Data Analysis Dashboard")
+
+# ---------- Standar kolom dataset ----------
 EXPECTED = [
     "ID_pemesanan","nama_pengguna","email","nama_hotel","kota",
     "check_in","check_out","durasi_inap","jumlah_kamar",
@@ -24,176 +24,199 @@ EXPECTED = [
     "wallet_address","status_transaksi","timestamp_pemesanan"
 ]
 
-def build_template_df():
-    return pd.DataFrame(columns=EXPECTED)
+# ---------- State awal ----------
+if "eda_df" not in st.session_state:
+    st.session_state["eda_df"] = None
 
-# --- UI: download template ---
-st.download_button(
-    "⬇️ Download template CSV",
-    data=build_template_df().to_csv(index=False).encode("utf-8"),
-    file_name="template_pemesanan.csv",
-    mime="text/csv",
-    use_container_width=True,
-)
-
-# --- UI: upload file ---
-col = st.columns(3)
-with col[0]:
-    delim = st.selectbox("Delimiter CSV", [",",";","\\t"], index=0)
-with col[1]:
-    dec = st.selectbox("Tanda desimal", [".",","], index=0)
-with col[2]:
-    show_preview = st.checkbox("Preview 5 baris", value=True)
-
-up = st.file_uploader("Upload dataset pemesanan (CSV/XLSX)", type=["csv","xlsx"], accept_multiple_files=False)
+# ---------- Helper ----------
+@st.cache_data
+def build_template_csv() -> bytes:
+    """Template kosong (header saja)."""
+    return pd.DataFrame(columns=EXPECTED).to_csv(index=False).encode("utf-8")
 
 @st.cache_data
-def _read_user_file(file, sep, decimal):
-    if file.name.lower().endswith(".csv"):
-        return pd.read_csv(file, sep=sep, decimal=decimal)
-    return pd.read_excel(file)
+def load_demo_csv() -> pd.DataFrame:
+    """
+    Opsional: dataset contoh di folder yang sama (jika ada).
+    Nama file boleh kamu sesuaikan.
+    """
+    demo_name = "Dataset_Pemesanan_Hotel_1000Baris.csv"
+    if not os.path.exists(demo_name):
+        return pd.DataFrame(columns=EXPECTED)
+    # default pakai ';' (ubah sesuai dataset demo-mu)
+    df = pd.read_csv(demo_name, sep=";")
+    return df
 
-def _validate_columns(df):
+def cast_types(df: pd.DataFrame) -> pd.DataFrame:
+    """Casting tipe kolom agar grafik aman."""
+    date_cols = ["check_in","check_out","timestamp_pemesanan"]
+    num_cols  = ["durasi_inap","jumlah_kamar","harga_per_malam","total_biaya"]
+    for c in date_cols:
+        if c in df.columns:
+            df[c] = pd.to_datetime(df[c], errors="coerce")
+    for c in num_cols:
+        if c in df.columns:
+            df[c] = pd.to_numeric(df[c], errors="coerce")
+    return df
+
+def validate_columns(df: pd.DataFrame):
     missing = [c for c in EXPECTED if c not in df.columns]
     extra   = [c for c in df.columns if c not in EXPECTED]
     return missing, extra
 
+@st.cache_data
+def read_user_file(file, sep: str, decimal: str) -> pd.DataFrame:
+    if file.name.lower().endswith(".csv"):
+        return pd.read_csv(file, sep=sep, decimal=decimal)
+    return pd.read_excel(file)
+
+# ---------- Header: Download template + Upload ----------
+top = st.container()
+with top:
+    c_dl, c_sp, c_prev = st.columns([1.2, 2, 1])
+    with c_dl:
+        st.download_button(
+            "⬇️ Download template CSV",
+            data=build_template_csv(),
+            file_name="template_pemesanan.csv",
+            mime="text/csv",
+            use_container_width=True,
+        )
+    with c_prev:
+        preview5 = st.checkbox("Preview 5 baris", value=True)
+
+    c1, c2 = st.columns(2)
+    with c1:
+        delim = st.selectbox("Delimiter CSV", [",",";","\\t"], index=0)
+    with c2:
+        dec = st.selectbox("Tanda desimal", [".",","], index=0)
+
+    up = st.file_uploader(
+        "Upload dataset pemesanan (CSV/XLSX)",
+        type=["csv","xlsx"],
+        accept_multiple_files=False
+    )
+
+# ---------- Kontrol dataset (Demo & Clear) ----------
+cc1, cc2 = st.columns([1,1])
+with cc1:
+    use_demo = st.toggle(
+        "Gunakan data demo (jika tersedia)",
+        value=False,
+        help="Aktifkan untuk memuat dataset contoh bila belum meng-upload."
+    )
+with cc2:
+    if st.button("🔄 Clear dataset (mulai kosong)"):
+        st.session_state["eda_df"] = None
+        st.rerun()
+
+# ---------- Load dari upload / demo ----------
 if up is not None:
     try:
-        df = _read_user_file(up, sep=delim, decimal=dec)
-
-        # Validasi header
-        missing, extra = _validate_columns(df)
+        df = read_user_file(up, sep=delim if delim != "\\t" else "\t", decimal=dec)
+        missing, extra = validate_columns(df)
         if missing:
-            st.error(f"Kolom hilang: {', '.join(missing)}")
+            st.error(f"Format CSV tidak sesuai. Kolom hilang: {', '.join(missing)}")
             st.stop()
         if extra:
             st.warning(f"Ada kolom tambahan yang tidak dikenali: {', '.join(extra)}")
-
-        # Cast tipe data agar grafik aman
-        date_cols = ["check_in","check_out","timestamp_pemesanan"]
-        num_cols  = ["durasi_inap","jumlah_kamar","harga_per_malam","total_biaya"]
-        for c in date_cols:
-            df[c] = pd.to_datetime(df[c], errors="coerce")
-        for c in num_cols:
-            df[c] = pd.to_numeric(df[c], errors="coerce")
-
-        # Simpan ke session untuk modul visualisasi lain
+        df = cast_types(df)
         st.session_state["eda_df"] = df
-
         st.success(f"Dataset valid ✅  ({df.shape[0]} baris, {df.shape[1]} kolom)")
-        if show_preview:
-            st.dataframe(df.head())
-
+        if preview5:
+            st.dataframe(df.head(), use_container_width=True)
     except Exception as e:
         st.error(f"Gagal membaca file: {e}")
 
-st.set_page_config(layout="wide")
-st.title("📊 Exploratory Data Analysis Dashboard")
+df = st.session_state["eda_df"]
+if df is None and use_demo:
+    demo_df = load_demo_csv()
+    if not demo_df.empty:
+        st.session_state["eda_df"] = cast_types(demo_df)
+        df = st.session_state["eda_df"]
+        st.info("Memuat data demo.")
+        if preview5:
+            st.dataframe(df.head(), use_container_width=True)
 
-# Load data
-df = pd.read_csv("Dataset_Pemesanan_Hotel_1000Baris.csv", sep=';')
-df['harga_per_malam'] = pd.to_numeric(df['harga_per_malam'], errors='coerce')
-df['total_biaya'] = pd.to_numeric(df['total_biaya'], errors='coerce')
-df['durasi_inap'] = pd.to_numeric(df['durasi_inap'], errors='coerce')
-df['jumlah_kamar'] = pd.to_numeric(df['jumlah_kamar'], errors='coerce')
+# ---------- Empty state ----------
+if df is None or df.empty:
+    st.info("Belum ada data. Silakan upload CSV/XLSX sesuai template, atau aktifkan **Gunakan data demo**.")
+    st.stop()
 
-# Sidebar
+# ---------- Sidebar pengaturan visualisasi ----------
 st.sidebar.header("🔧 Pengaturan Visualisasi")
 chart_type = st.sidebar.selectbox(
-    "Pilih Jenis Grafik", 
-    ["Scatter", "Bar", "Line", "Box", "Heatmap", "Pie", "Histogram"]
+    "Pilih Jenis Grafik",
+    ["Scatter","Bar","Line","Box","Histogram","Heatmap","Pie"]
 )
 
-x_axis = st.sidebar.selectbox("Sumbu X", df.select_dtypes(include='number').columns)
-y_axis = st.sidebar.selectbox("Sumbu Y", df.select_dtypes(include='number').columns)
-color = st.sidebar.selectbox("Warna Berdasarkan (opsional)", [None] + list(df.select_dtypes(include='object').columns))
+num_cols = df.select_dtypes(include="number").columns.tolist()
+cat_cols = df.select_dtypes(include=["object","category"]).columns.tolist()
+all_cols = df.columns.tolist()
 
-# Chart rendering
-st.markdown("## 🔥 Visualisasi Data")
+# default pilihan sumbu
+default_x = num_cols[0] if num_cols else all_cols[0]
+default_y = num_cols[1] if len(num_cols) > 1 else (num_cols[0] if num_cols else None)
 
-if chart_type == "Scatter":
-    fig = px.scatter(df, x=x_axis, y=y_axis, color=color, hover_data=['nama_hotel', 'metode_pembayaran'])
-    fig.update_layout(title=f"{x_axis} vs {y_axis}")
-    st.plotly_chart(fig, use_container_width=True)
+x_axis = st.sidebar.selectbox("Sumbu X", num_cols if chart_type != "Pie" else all_cols, index=0 if default_x in (num_cols if chart_type != "Pie" else all_cols) else 0)
+y_axis = None
+if chart_type in ["Scatter","Bar","Line","Box"]:
+    y_axis = st.sidebar.selectbox("Sumbu Y", num_cols, index=(1 if default_y and default_y in num_cols else 0))
 
-elif chart_type == "Bar":
-    fig = px.bar(df, x=x_axis, y=y_axis, color=color)
-    fig.update_layout(title=f"Bar Chart: {x_axis} vs {y_axis}")
-    st.plotly_chart(fig, use_container_width=True)
+color_opt = st.sidebar.selectbox("Warna Berdasarkan (opsional)", [None] + all_cols, index=0)
 
-elif chart_type == "Line":
-    fig = px.line(df.sort_values(by=x_axis), x=x_axis, y=y_axis, color=color)
-    fig.update_layout(title=f"Line Chart: {x_axis} vs {y_axis}")
-    st.plotly_chart(fig, use_container_width=True)
+# ---------- Plot ----------
+st.subheader("🔥 Visualisasi Data")
 
-elif chart_type == "Box":
-    fig = px.box(df, x=color if color else x_axis, y=y_axis)
-    fig.update_layout(title=f"Box Plot: {y_axis} berdasarkan {color if color else x_axis}")
-    st.plotly_chart(fig, use_container_width=True)
+def add_color(kwargs):
+    if color_opt:
+        kwargs["color"] = color_opt
+    return kwargs
 
-elif chart_type == "Heatmap":
-    st.markdown("### 🔥 Korelasi Antar Variabel Numerik")
-    corr = df.select_dtypes(include='number').corr()
-    fig = px.imshow(corr, text_auto=True, aspect="auto", color_continuous_scale='RdBu_r')
-    st.plotly_chart(fig, use_container_width=True)
+if chart_type == "Heatmap":
+    if len(num_cols) < 2:
+        st.warning("Butuh minimal 2 kolom numerik untuk Heatmap.")
+    else:
+        corr = df[num_cols].corr()
+        fig = px.imshow(corr, text_auto=True, color_continuous_scale="RdBu_r", zmin=-1, zmax=1)
+        st.plotly_chart(fig, use_container_width=True)
+
+elif chart_type == "Histogram":
+    if not num_cols:
+        st.warning("Tidak ada kolom numerik.")
+    else:
+        xh = st.sidebar.selectbox("Kolom (Histogram)", num_cols)
+        fig = px.histogram(df, x=xh, **add_color({}))
+        st.plotly_chart(fig, use_container_width=True)
 
 elif chart_type == "Pie":
-    pie_col = st.sidebar.selectbox("Kolom untuk Pie Chart", df.select_dtypes(include='object').columns)
-    pie_data = df[pie_col].value_counts().reset_index()
-    pie_data.columns = [pie_col, 'count']
-    fig = px.pie(pie_data, names=pie_col, values='count', title=f"Distribusi {pie_col}")
-    st.plotly_chart(fig, use_container_width=True)
+    if not cat_cols or not num_cols:
+        st.warning("Butuh kolom kategori dan numerik untuk Pie chart.")
+    else:
+        names = st.sidebar.selectbox("Nama (kategori)", cat_cols)
+        values = st.sidebar.selectbox("Nilai (numerik)", num_cols)
+        fig = px.pie(df, names=names, values=values)
+        st.plotly_chart(fig, use_container_width=True)
 
-elif chart_type == "Histogram":
-    hist_col = st.sidebar.selectbox("Kolom untuk Histogram", df.select_dtypes(include='number').columns)
-    fig = px.histogram(df, x=hist_col, nbins=30, title=f"Distribusi {hist_col}")
-    st.plotly_chart(fig, use_container_width=True)
-
-# Buat subset data untuk insight otomatis (dinamis)
-subset_df = df.copy()
-
-if chart_type == "Pie":
-    subset_df = df[df[pie_col].notnull()]
-elif chart_type == "Histogram":
-    subset_df = df[df[hist_col].notnull()]
 else:
-    columns = [x_axis, y_axis]
-    if color:
-        columns.append(color)
-    subset_df = df.dropna(subset=columns)
+    # Scatter / Bar / Line / Box
+    if y_axis is None:
+        st.warning("Pilih sumbu Y terlebih dahulu.")
+    else:
+        common_kwargs = add_color({"hover_data": [c for c in ["ID_pemesanan","nama_hotel","kota","metode_pembayaran","status_transaksi"] if c in df.columns]})
+        if chart_type == "Scatter":
+            fig = px.scatter(df, x=x_axis, y=y_axis, **common_kwargs)
+        elif chart_type == "Bar":
+            fig = px.bar(df, x=x_axis, y=y_axis, **common_kwargs)
+        elif chart_type == "Line":
+            fig = px.line(df, x=x_axis, y=y_axis, **common_kwargs)
+        elif chart_type == "Box":
+            fig = px.box(df, x=x_axis, y=y_axis, **common_kwargs)
+        st.plotly_chart(fig, use_container_width=True)
 
-
-if 'nama_hotel' in subset_df.columns:
-    st.write("🏨 Hotel Paling Sering Dipesan:", subset_df['nama_hotel'].value_counts().idxmax())
-if 'total_biaya' in subset_df.columns:
-    st.write("💰 Total Biaya Tertinggi:", subset_df['total_biaya'].max())
-if 'metode_pembayaran' in subset_df.columns:
-    st.write("🧾 Metode Pembayaran Terbanyak:", subset_df['metode_pembayaran'].value_counts().idxmax())
-
-# Show data table
-if st.checkbox("📋 Tampilkan Tabel Data"):
-    st.dataframe(df)
-
-# Download CSV
-st.markdown("### 📥 Unduh Dataset")
-csv = df.to_csv(index=False).encode('utf-8')
-st.download_button(
-    label="Unduh Data CSV",
-    data=csv,
-    file_name='data_pemesanan_hotel.csv',
-    mime='text/csv',
-	)
-	
-try:
-    mean_x = float(subset_df[x_axis].mean())
-    mean_y = float(subset_df[y_axis].mean())
-    st.write(f"📈 Rata-rata {x_axis}: {mean_x:,.0f}")
-    st.write(f"📉 Rata-rata {y_axis}: {mean_y:,.0f}")
-except Exception as e:
-    st.error(f"❌ Gagal hitung rata-rata: {e}")
-
-if st.sidebar.checkbox("🛠️ Aktifkan Debug Mode"):
-    st.write("Kolom di subset_df:", subset_df.columns.tolist())
-    st.write("Tipe subset_df[x_axis]:", type(subset_df[x_axis]))
-    st.write("Contoh isi:", subset_df[x_axis].head())
+# ---------- Ringkasan kecil ----------
+with st.expander("ℹ️ Ringkasan Cepat"):
+    st.write(f"Jumlah baris: **{len(df):,}**")
+    if set(["durasi_inap","total_biaya"]).issubset(df.columns):
+        corr_val = df[["durasi_inap","total_biaya"]].corr().iloc[0,1]
+        st.write(f"Korelasi *durasi_inap ↔ total_biaya*: **{corr_val:.3f}**")
