@@ -1,5 +1,3 @@
-# app.py — Dashboard EDA Pemesanan (versi upload + template + empty state)
-
 import os, io
 import pandas as pd
 import plotly.express as px
@@ -51,9 +49,7 @@ with col2:
 
 # ---------- Konfigurasi halaman ----------
 st.set_page_config(page_title="STC Insight", layout="wide")
-st.title("📊 Dashboard Exploratory Data Analysis, ℹ️ About STC Insight
-
-**STC Insight** is a lightweight dashboard for cost-related data visualization in the **SmartTourismChain (STC)** ecosystem.
+st.title("📊 Dashboard Exploratory Data Analysis, ℹ️ About STC Insight **STC Insight** is a lightweight dashboard for cost-related data visualization in the **SmartTourismChain (STC)** ecosystem.
 
 🔍 This tool helps researchers and developers explore financial datasets using:
 
