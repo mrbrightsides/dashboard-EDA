@@ -49,10 +49,11 @@ with col1:
 with col2:
     st.markdown("## STC Insight")
 
-st.sidebar.title("ℹ️ About")
-st.sidebar.markdown(""" ℹ️ About STC Insight
+# ---------- Konfigurasi halaman ----------
+st.set_page_config(page_title="STC Insight", layout="wide")
+st.title("📊 Dashboard Exploratory Data Analysis, ℹ️ About STC Insight
 
-**STC Insight** is a lightweight dashboard for cost-related data visualization in the **SmartWisataChain (STC)** ecosystem.
+**STC Insight** is a lightweight dashboard for cost-related data visualization in the **SmartTourismChain (STC)** ecosystem.
 
 🔍 This tool helps researchers and developers explore financial datasets using:
 
@@ -69,12 +70,7 @@ st.sidebar.markdown(""" ℹ️ About STC Insight
 - ⭐ **Star / Fork**: [GitHub repo](https://github.com/mrbrightsides/dashboard-EDA/tree/main)
 - Built with 💙 by [ELPEEF](https://elpeef.com)
 
-Versi UI: v1.0 • Streamlit • Theme Dark
-""")
-
-# ---------- Konfigurasi halaman ----------
-st.set_page_config(page_title="Dashboard EDA Pemesanan", layout="wide")
-st.title("📊 Dashboard Exploratory Data Analysis")
+Versi UI: v1.0 • Streamlit • Theme Dark")
 
 # ---------- Standar kolom dataset ----------
 EXPECTED = [
