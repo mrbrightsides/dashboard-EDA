@@ -49,7 +49,8 @@ with col1:
 with col2:
     st.markdown("## STC Insight")
 
-### ℹ️ About STC Insight
+st.sidebar.title("ℹ️ About")
+st.sidebar.markdown(""" ℹ️ About STC Insight
 
 **STC Insight** is a lightweight dashboard for cost-related data visualization in the **SmartWisataChain (STC)** ecosystem.
 
@@ -69,6 +70,7 @@ with col2:
 - Built with 💙 by [ELPEEF](https://elpeef.com)
 
 Versi UI: v1.0 • Streamlit • Theme Dark
+""")
 
 # ---------- Konfigurasi halaman ----------
 st.set_page_config(page_title="Dashboard EDA Pemesanan", layout="wide")
