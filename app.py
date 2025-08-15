@@ -20,24 +20,30 @@ st.set_page_config(
 
 # ---------- Konfigurasi halaman ----------
 st.title("📊 Exploratory Data Analysis Dashboard")
+
+with st.expander("ℹ️ Tentang STC Insight", expanded=False):
+    st.markdown("""
+    <span style='font-size:16px; color:grey'>
+    <b>STC Insight</b> adalah dasbor visual interaktif untuk menganalisis data pemesanan dan biaya dalam ekosistem <a href="https://smartourism.elpeef.com/" target="_blank">SmartTourismChain (STC)</a>.
+
+    Dashboard ini dirancang untuk membantu pelaku industri, peneliti, dan pengembang dalam mengeksplorasi data transaksi wisata secara cepat dan intuitif, mulai dari tren durasi inap, total biaya, hingga metode pembayaran dan status transaksi.
+
+    **Fitur:**
+    - Interactive charts  
+    - CSV & NDJSON support  
+    - Configurable delimiter & decimal  
+    - Auto-generated heatmaps  
+    </span>
+    """, unsafe_allow_html=True)
+
+# Tetap tampilkan dukungan
 st.markdown("""
-<span style='font-size:16px; color:grey'>
-💡 <b>STC Insight</b> adalah dasbor visual interaktif untuk menganalisis data pemesanan dan biaya dalam ekosistem <a href="https://smartourism.elpeef.com/" target="_blank">SmartTourismChain (STC)</a>
-
-Dashboard ini dirancang untuk membantu pelaku industri, peneliti, dan pengembang dalam mengeksplorasi data transaksi wisata secara cepat dan intuitif, mulai dari tren durasi inap, total biaya, hingga metode pembayaran dan status transaksi.
-Fitur:
-- Interactive charts
-- CSV & NDJSON support
-- Configurable delimiter & decimal
-- Auto-generated heatmaps
-
 #### 🙌 Dukungan & kontributor
-- ⭐ **Star / Fork**: [GitHub repo](https://github.com/mrbrightsides/stc-gasvision/tree/main)
+- ⭐️ **Star / Fork**: [GitHub repo](https://github.com/mrbrightsides/stc-gasvision/tree/main)  
 - Built with 💙 by [ELPEEF](https://elpeef.com)
 
 Versi UI: v1.0 • Streamlit • Theme Dark
-</span>
-""", unsafe_allow_html=True)
+""")
 
 # ---------- Standar kolom dataset ----------
 EXPECTED = [
