@@ -4,6 +4,9 @@ import plotly.express as px
 import streamlit as st
 from datetime import datetime
 
+if st.query_params.get("ping") == "1":
+    st.write("ok"); st.stop()
+
 # === Logo dan Header ===
 LOGO_URL = "https://i.imgur.com/7j5aq4l.png"
 col1, col2 = st.columns([1, 4])
