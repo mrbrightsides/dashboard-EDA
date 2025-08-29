@@ -1,4 +1,4 @@
-# 📊 Dashboard Pemesanan Hotel
+# 📊 Exploratory Data Analysis Dashboard
 
 Visualisasi interaktif data pemesanan hotel berbasis **Streamlit** + **Plotly**.  
 Dashboard ini dirancang untuk menyajikan **insight otomatis** dari data pemesanan hotel seperti durasi inap, total biaya, dan metode pembayaran — sebagai bagian dari **rangkaian riset integrasi smart contract dalam ekosistem pariwisata digital**.
@@ -39,3 +39,10 @@ pip install -r requirements.txt
 
 # Jalankan Streamlit
 streamlit run app.py
+```
+
+---
+
+## 📜 Lisensi
+
+MIT License © ELPEEF Dev Team
