@@ -9,7 +9,6 @@ Dashboard ini dirancang untuk menyajikan **insight otomatis** dari data pemesana
 ![status: stable](https://img.shields.io/badge/status-stable-brightgreen)
 [![Keep Alive](https://github.com/mrbrightsides/dashboard-EDA/actions/workflows/ping.yml/badge.svg)](https://github.com/mrbrightsides/dashboard-EDA/actions/workflows/ping.yml)
 
-
 ---
 
 ## 🚀 Fitur Utama
@@ -20,6 +19,95 @@ Dashboard ini dirancang untuk menyajikan **insight otomatis** dari data pemesana
 - ✅ Checkbox Tabel Data
 - ✅ Tombol Unduh Dataset (CSV)
 - ✅ Debug Mode (opsional)
+
+---
+
+## 🪄 Alur Kerja
+
+```mermaid
+flowchart LR
+  U["👤 User"]
+  UI["🖥️ STC Insight (Streamlit)"]
+  U --> UI
+  click UI "https://stc-insight.streamlit.app" "Open STC Insight" _blank
+```
+
+## High-level Architecture
+
+```mermaid
+graph TD
+  U["👤 User"] --> UI["🖥️ STC Insight (Streamlit)"]
+
+  subgraph Inputs
+    CSV["📄 CSV / XLSX"]
+    NDJ["🧩 NDJSON (opsional)"]
+    DEMO["🗂️ Demo Dataset (opsional)"]
+  end
+
+  CSV --> UI
+  NDJ --> UI
+  DEMO --> UI
+
+  UI --> CFG["⚙️ Konfigurasi\n(delimiter, decimal, sampling)"]
+  UI --> PARSE["🧪 Parsing & Validasi\n(pandas)"]
+  PARSE --> DF["🧱 DataFrame"]
+
+  subgraph EDA & Viz
+    CHART["📊 Charts (Altair/Plotly)"]
+    HEAT["🔥 Heatmap Otomatis"]
+    PREV["🔎 Preview 5 baris"]
+  end
+
+  DF --> CHART
+  DF --> HEAT
+  DF --> PREV
+
+  subgraph Output
+    EXP["⬇️ Export PNG/CSV"]
+    TPL["⬇️ Download Template CSV"]
+  end
+
+  UI --> EXP
+  UI --> TPL
+
+  DF --> CACHE["🗃️ Cache Ringan\n(Streamlit cache)"]
+```
+
+---
+
+## Sequence: Upload → Render Chart
+
+```mermaid
+sequenceDiagram
+  participant U as User
+  participant UI as STC Insight (Streamlit)
+  participant P as Parser (pandas)
+  participant V as Viz (Altair/Plotly)
+
+  U->>UI: Pilih delimiter & decimal
+  U->>UI: Upload file (CSV/XLSX) atau pilih Demo Dataset
+  UI->>P: Baca file + infer dtype
+  P-->>UI: DataFrame + info kolom
+  UI->>UI: Validasi kolom x/y/color sesuai pilihan
+  UI->>V: Render chart (scatter/bar/line, dsb.)
+  V-->>UI: Figure siap tampil
+  UI-->>U: Tampilkan chart, preview 5 baris
+  U->>UI: Export PNG/CSV (opsional)
+```
+
+---
+
+## Data Pipeline Ringkas
+
+```mermaid
+flowchart LR
+  IN["Input File"] --> CLEAN["Clean & Sanitize\n(trim, NA, tanggal)"]
+  CLEAN --> INFER["Type Inference\n(numeric, categorical, date)"]
+  INFER --> FE["Feature Ops\n(binning durasi, mapping kota)"]
+  FE --> MAP["Chart Mapping\n(x, y, color, size)"]
+  MAP --> RENDER["Render Chart"]
+  RENDER --> OUT["Export PNG/CSV"]
+```
 
 ---
 
