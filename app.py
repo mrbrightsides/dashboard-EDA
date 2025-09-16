@@ -26,7 +26,8 @@ st.title("📊 Exploratory Data Analysis Dashboard")
 
 with st.expander("ℹ️ Tentang STC Insight", expanded=False):
     st.markdown("""
-    📘 About
+    ## 📘 About
+    
     STC Insight adalah dasbor visual interaktif untuk menganalisis data pemesanan dan biaya dalam ekosistem <a href="https://smartourism.elpeef.com/" target="_blank">SmartTourismChain (STC)</a>.
 
     Dashboard ini dirancang untuk membantu pelaku industri, peneliti, dan pengembang dalam mengeksplorasi data transaksi wisata secara cepat dan intuitif, mulai dari tren durasi inap, total biaya, hingga metode pembayaran dan status transaksi.
@@ -37,7 +38,7 @@ with st.expander("ℹ️ Tentang STC Insight", expanded=False):
     - Configurable delimiter & decimal  
     - Auto-generated heatmaps  
 
-    🧩 RANTAI Ecosystem
+    ## 🧩 RANTAI Ecosystem
     1. [STC Analytics](https://stc-analytics.streamlit.app/)
     2. [STC GasVision](https://stc-gasvision.streamlit.app/)
     3. [STC Bench](https://stc-bench.streamlit.app/)
@@ -49,7 +50,7 @@ with st.expander("ℹ️ Tentang STC Insight", expanded=False):
     9. [DataHub](https://stc-data.streamlit.app/)
     10. [BlockPedia](https://blockpedia.streamlit.app/)   
 
-    🙌 Dukungan & kontributor
+    ## 🙌 Dukungan & kontributor
     - ⭐ **Star / Fork**: [GitHub repo](https://github.com/mrbrightsides/stc-swc)
     - Built with 💙 by [Khudri](https://s.id/khudri)
     - Dukung pengembangan proyek ini melalui: 
