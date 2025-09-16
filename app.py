@@ -27,8 +27,7 @@ st.title("📊 Exploratory Data Analysis Dashboard")
 with st.expander("ℹ️ Tentang STC Insight", expanded=False):
     st.markdown("""
     📘 About
-    <span style='font-size:16px'>
-    <b>STC Insight</b> adalah dasbor visual interaktif untuk menganalisis data pemesanan dan biaya dalam ekosistem <a href="https://smartourism.elpeef.com/" target="_blank">SmartTourismChain (STC)</a>.
+    STC Insight adalah dasbor visual interaktif untuk menganalisis data pemesanan dan biaya dalam ekosistem <a href="https://smartourism.elpeef.com/" target="_blank">SmartTourismChain (STC)</a>.
 
     Dashboard ini dirancang untuk membantu pelaku industri, peneliti, dan pengembang dalam mengeksplorasi data transaksi wisata secara cepat dan intuitif, mulai dari tren durasi inap, total biaya, hingga metode pembayaran dan status transaksi.
     
