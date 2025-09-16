@@ -26,6 +26,7 @@ st.title("📊 Exploratory Data Analysis Dashboard")
 
 with st.expander("ℹ️ Tentang STC Insight", expanded=False):
     st.markdown("""
+    📘 About
     <span style='font-size:16px'>
     <b>STC Insight</b> adalah dasbor visual interaktif untuk menganalisis data pemesanan dan biaya dalam ekosistem <a href="https://smartourism.elpeef.com/" target="_blank">SmartTourismChain (STC)</a>.
 
