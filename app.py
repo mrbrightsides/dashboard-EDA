@@ -30,16 +30,33 @@ with st.expander("ℹ️ Tentang STC Insight", expanded=False):
     <b>STC Insight</b> adalah dasbor visual interaktif untuk menganalisis data pemesanan dan biaya dalam ekosistem <a href="https://smartourism.elpeef.com/" target="_blank">SmartTourismChain (STC)</a>.
 
     Dashboard ini dirancang untuk membantu pelaku industri, peneliti, dan pengembang dalam mengeksplorasi data transaksi wisata secara cepat dan intuitif, mulai dari tren durasi inap, total biaya, hingga metode pembayaran dan status transaksi.
-
+    
     **Fitur:**
     - Interactive charts  
     - CSV & NDJSON support  
     - Configurable delimiter & decimal  
     - Auto-generated heatmaps  
 
+    ### 🧩 RANTAI Ecosystem
+    1. [STC Analytics](https://stc-analytics.streamlit.app/)
+    2. [STC GasVision](https://stc-gasvision.streamlit.app/)
+    3. [STC Bench](https://stc-bench.streamlit.app/)
+    4. [STC Gasvision](https://stc-gasvision.streamlit.app/)
+    5. [STC Plugin](https://smartourism.elpeef.com/)
+    6. [SmartFaith](https://smartfaith.streamlit.app/)
+    7. [Learn3](https://learn3.streamlit.app/)
+    8. [Nexus](https://rantai-nexus.streamlit.app/)
+    9. [DataHub](https://stc-data.streamlit.app/)
+    10. [BlockPedia](https://blockpedia.streamlit.app/)   
+
     #### 🙌 Dukungan & kontributor
-    - ⭐️ **Star / Fork**: [GitHub repo](https://github.com/mrbrightsides/stc-gasvision/tree/main)  
-    - Built with 💙 by [ELPEEF](https://elpeef.com)
+    - ⭐ **Star / Fork**: [GitHub repo](https://github.com/mrbrightsides/stc-swc)
+    - Built with 💙 by [Khudri](https://s.id/khudri)
+    - Dukung pengembangan proyek ini melalui: 
+      [💖 GitHub Sponsors](https://github.com/sponsors/mrbrightsides) • 
+      [☕ Ko-fi](https://ko-fi.com/khudri) • 
+      [💵 PayPal](https://www.paypal.com/paypalme/akhmadkhudri) • 
+      [🍵 Trakteer](https://trakteer.id/akhmad_khudri)
 
     Versi UI: v1.0 • Streamlit • Theme Dark
     </span>
