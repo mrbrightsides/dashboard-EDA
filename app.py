@@ -38,21 +38,27 @@ with st.expander("ℹ️ Tentang STC Insight", expanded=False):
     - Configurable delimiter & decimal  
     - Auto-generated heatmaps  
 
-    ## 🧩 RANTAI Ecosystem
+    ## 🧩 STC Ecosystem
     1. [STC Analytics](https://stc-analytics.streamlit.app/)
     2. [STC GasVision](https://stc-gasvision.streamlit.app/)
-    3. [STC Bench](https://stc-bench.streamlit.app/)
-    4. [STC Gasvision](https://stc-gasvision.streamlit.app/)
-    5. [STC Plugin](https://smartourism.elpeef.com/)
-    6. [SmartFaith](https://smartfaith.streamlit.app/)
-    7. [Learn3](https://learn3.streamlit.app/)
-    8. [Nexus](https://rantai-nexus.streamlit.app/)
-    9. [DataHub](https://stc-data.streamlit.app/)
-    10. [BlockPedia](https://blockpedia.streamlit.app/)
-    11. [STC GasX](https://stc-gasx.streamlit.app/)
+    3. [STC Converter](https://stc-converter.streamlit.app/)
+    4. [STC Bench](https://stc-bench.streamlit.app/)
+    5. [STC Insight](https://stc-insight.streamlit.app/)
+    6. [STC Plugin](https://smartourism.elpeef.com/)
+    7. [STC GasX](https://stc-gasx.streamlit.app/)
+    8. [DataHub](https://stc-data.streamlit.app/)
+
+    ## ☂ RANTAI Communities
+    1. [Learn3](https://learn3.streamlit.app/)
+    2. [BlockPedia](https://blockpedia.streamlit.app/)
+    3. [SmartFaith](https://smartfaith.streamlit.app/)
+    4. [Nexus](https://rantai-nexus.streamlit.app/)
+    5. [Exploratory Data Analysis](https://rantai-exploda.streamlit.app/)
+    6. [Business Intelligence](https://rantai-busi.streamlit.app/)
+    7. [Predictive Modelling](https://rantai-model-predi.streamlit.app/)
 
     ## 🙌 Dukungan & kontributor
-    - ⭐ **Star / Fork**: [GitHub repo](https://github.com/mrbrightsides/stc-swc)
+    - ⭐ **Star / Fork**: [GitHub repo](https://github.com/mrbrightsides/dashboard-eda)
     - Built with 💙 by [Khudri](https://s.id/khudri)
     - Dukung pengembangan proyek ini melalui: 
       [💖 GitHub Sponsors](https://github.com/sponsors/mrbrightsides) • 
