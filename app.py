@@ -51,12 +51,12 @@ with st.expander("ℹ️ Tentang STC Insight", expanded=False):
     ## ☂ RANTAI Communities
     1. [Learn3](https://learn3.streamlit.app/)
     2. [BlockPedia](https://blockpedia.streamlit.app/)
-    3. [SmartFaith](https://smartfaith.streamlit.app/)
+    3. [Diva](https://rantai-diva.streamlit.app/)
     4. [Nexus](https://rantai-nexus.streamlit.app/)
     5. [Exploratory Data Analysis](https://rantai-exploda.streamlit.app/)
     6. [Business Intelligence](https://rantai-busi.streamlit.app/)
     7. [Predictive Modelling](https://rantai-model-predi.streamlit.app/)
-    8. [Ethic, Bias, Law, & Religion](https://rantai-ethika.streamlit.app/)
+    8. [Ethic & Bias Checker](https://rantai-ethika.streamlit.app/)
 
     ## 🙌 Dukungan & kontributor
     - ⭐ **Star / Fork**: [GitHub repo](https://github.com/mrbrightsides/dashboard-eda)
