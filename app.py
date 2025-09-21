@@ -46,7 +46,9 @@ with st.expander("ℹ️ Tentang STC Insight", expanded=False):
     5. [STC Insight](https://stc-insight.streamlit.app/)
     6. [STC Plugin](https://smartourism.elpeef.com/)
     7. [STC GasX](https://stc-gasx.streamlit.app/)
-    8. [DataHub](https://stc-data.streamlit.app/)
+    8. [STC CarbonPrint](https://stc-carbonprint.streamlit.app/)
+    9. [STC ImpactViz](https://stc-impactviz.streamlit.app/)
+    10. [DataHub](https://stc-data.streamlit.app/)
 
     ## ☂ RANTAI Communities
     1. [Learn3](https://learn3.streamlit.app/)
