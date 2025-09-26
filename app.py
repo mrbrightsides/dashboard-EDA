@@ -36,7 +36,8 @@ with st.expander("ℹ️ Tentang STC Insight", expanded=False):
     - Interactive charts  
     - CSV & NDJSON support  
     - Configurable delimiter & decimal  
-    - Auto-generated heatmaps  
+    - Auto-generated heatmaps
+    - [Dataset](https://github.com/mrbrightsides/dashboard-EDA)
 
     ## 🧩 STC Ecosystem
     1. [STC Analytics](https://stc-analytics.streamlit.app/)
